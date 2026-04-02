@@ -6,14 +6,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.finance.model.entity.FinancialRecord;
 
-// 2. Import the Repository you actually created
 import com.example.finance.repository.FinancialRecordRepository;
 
 @Service
 public class FinancialService {
 
     @Autowired
-    // 3. Match the variable type to the Import above
     private FinancialRecordRepository repository;
 
     public List<FinancialRecord> getAll() {
@@ -22,5 +20,17 @@ public class FinancialService {
 
     public FinancialRecord save(FinancialRecord record) {
         return repository.save(record);
+    }
+
+    public Double calculateTotalRevenue() {
+        return repository.findAll().stream()
+                .mapToDouble(record -> {
+                    if ("INCOME".equalsIgnoreCase(record.getType())) {
+                        return record.getAmount().doubleValue();
+                    } else {
+                        return -record.getAmount().doubleValue();
+                    }
+                })
+                .sum();
     }
 }

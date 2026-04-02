@@ -4,6 +4,7 @@ import com.example.finance.model.entity.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+//Database CRUD updated here the jpa repository makes it easier to do the database operation basically
 @Repository
 public interface FinancialRecordRepository extends JpaRepository<FinancialRecord, Long> {
 
