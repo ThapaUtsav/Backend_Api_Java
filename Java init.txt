@@ -1,0 +1,8 @@
+curl https://start.spring.io/starter.tgz \
+  -d dependencies=web,data-jpa,postgresql,security,lombok,validation \     //using lombok for removing too many usage of annotion and code this helps alot (look it up)
+  -d javaVersion=21 \            //change when new udpates
+  -d type=maven-project \
+  -d name=finance-dashboard \    //change name based on what u want to name your project
+  -d baseDir=finance-dashboard | tar -xzvf -
+
+mkdir -p src/main/java/com/example/finance/{controller,service,repository,model/{entity,dto},security,exception,config}  /this is modern MVC structure upto my knowledge will look into it
