@@ -8,6 +8,8 @@ import com.example.finance.model.entity.FinancialRecord;
 
 import com.example.finance.repository.FinancialRecordRepository;
 
+import lombok.NonNull;
+
 @Service
 public class FinancialService {
 
@@ -18,7 +20,7 @@ public class FinancialService {
         return repository.findAll();
     }
 
-    public FinancialRecord save(FinancialRecord record) {
+    public FinancialRecord save(@NonNull FinancialRecord record) {
         return repository.save(record);
     }
 
@@ -26,11 +28,16 @@ public class FinancialService {
         return repository.findAll().stream()
                 .mapToDouble(record -> {
                     if ("INCOME".equalsIgnoreCase(record.getType())) {
-                        return record.getAmount().doubleValue();
+                        return record.getAmount().doubleValue();// GET THE TOTAL REVENUE?
                     } else {
-                        return -record.getAmount().doubleValue();
+                        return -record.getAmount().doubleValue(); // or the subtracted reveneu basically epxense is
+                                                                  // subtracted
                     }
                 })
                 .sum();
+    }
+
+    public void delete(@NonNull Long id) {
+        repository.deleteById(id);
     }
 }
