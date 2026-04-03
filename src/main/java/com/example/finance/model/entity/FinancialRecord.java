@@ -1,6 +1,8 @@
 package com.example.finance.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import java.math.*;
 import java.time.*;
@@ -26,5 +28,10 @@ public class FinancialRecord {
     private String category;
 
     private LocalDate date;
+
+    @NotBlank(message = "Description is required")
     private String description;
+
+    @Positive(message = "Amount must be greater than zero")
+    private Double amountvalue;
 }

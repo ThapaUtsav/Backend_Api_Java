@@ -1,6 +1,9 @@
 package com.example.finance.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +42,12 @@ public class FinancialService {
 
     public void delete(@NonNull Long id) {
         repository.deleteById(id);
+    }
+
+    public Map<String, Double> getSpendingByCategory() {
+        return repository.findAll().stream()
+                .filter(record -> "EXPENSE".equalsIgnoreCase(record.getType()))
+                .collect(Collectors.groupingBy(FinancialRecord::getCategory,
+                        Collectors.summingDouble(record -> record.getAmount().doubleValue())));
     }
 }

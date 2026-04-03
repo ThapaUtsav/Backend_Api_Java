@@ -6,6 +6,7 @@ import com.example.finance.model.entity.FinancialRecord;
 import com.example.finance.service.FinancialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,5 +40,10 @@ public class FinanceController {
     public String deleteRecord(@PathVariable Long id) {
         financialService.delete(id);
         return "Record deleted of " + id;
+    }
+
+    @GetMapping("/summary/categories")
+    public Map<String, Double> getCategorySummary() {
+        return financialService.getSpendingByCategory();
     }
 }
