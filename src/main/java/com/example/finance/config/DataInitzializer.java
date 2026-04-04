@@ -23,6 +23,23 @@ public class DataInitzializer {
                 userRepository.save(admin);
                 System.out.println("Admin user created: admin / admin123");
             }
+            if (userRepository.findByUsername("analyst").isEmpty()) {
+                userRepository.save(User.builder()
+                        .username("analyst")
+                        .password(passwordEncoder.encode("analyst123"))
+                        .role("ROLE_ANALYST")
+                        .build());
+                System.out.println("Analyst created: analyst/analyst123");
+            }
+
+            if (userRepository.findByUsername("viewer").isEmpty()) {
+                userRepository.save(User.builder()
+                        .username("viewer")
+                        .password(passwordEncoder.encode("viewer123"))
+                        .role("ROLE_VIEWER")
+                        .build());
+                System.out.println("Viewer created: viewer/viewer123");
+            }
         };
     }
 }
