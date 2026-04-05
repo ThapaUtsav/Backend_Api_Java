@@ -14,14 +14,19 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 // found about beans
 // https://docs.spring.io/spring-security/reference/servlet/architecture.html
-// still used AI for this
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // Disabled for testing in Postman
                 .authorizeHttpRequests(auth -> auth
-                        // Section 1: Access Control Rules
+                        // swaggerui and API docs should be public
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html")
+                        .permitAll()
+                        // Access Control Rules
                         .requestMatchers(HttpMethod.DELETE, "/api/finance/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/finance/**").hasAnyRole("ADMIN", "ANALYST")
                         .requestMatchers(HttpMethod.PUT, "/api/finance/**").hasAnyRole("ADMIN", "ANALYST")
